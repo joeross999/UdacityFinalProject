@@ -70,10 +70,12 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
         console.log("populateInfoWindow")
-        details = getLocationDetails(marker, function(details, status){
+        details = getLocationDetails(marker, function(details, status, weather){
+            console.log('getLocationDetails');
             console.log(details);
+            console.log(weather);
             if (status === google.maps.places.PlacesServiceStatus.OK){
-            infowindow.setContent(parkHTML(details));
+            infowindow.setContent(parkHTML(details, weather));
             }else{
                 console.log('there is a problem');
             }
@@ -86,34 +88,36 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
-function parkHTML(details) {
-    var html = '<div><h2>' + details.name + '</h2><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div>'
+function parkHTML(details, weather) {
+    var html = '<div><h2>' + details.name + '</h2><div style="width: 50%; float: left"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 50%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p><img style="width: 100%"src="' + weather.current.condition.icon + '"></div></div>'
     console.log('html');
     console.log(html);
     return html;
 }
 
 function getLocationDetails(marker, callback){
-    console.log(marker);
     placesService.getDetails({
         placeId: marker.id
       }, function(place, status) {
-            callback(place, status);
+        getWeatherForLocation(place, status, callback);        
+            // callback(place, status);
       });
 }
 
-// function getWeatherForLocation(location) {
-//     request = 'http://api.geonames.org/postalCodeLookupJSON?postalcode=' + postalcode  + '&country=' + country  + '&callback=getLocation&username=demo';
-    
-//       // Create a new script object
-//       aObj = new JSONscriptRequest(request);
-//       // Build the script tag
-//       aObj.buildScriptTag();
-//       // Execute (add) the script tag
-//       aObj.addScriptTag();
+function getWeatherForLocation(location, status, callback) {
+    console.log('getWeatherForLocation');
+    var lng = location.geometry.location.lng();
+    var lat = location.geometry.location.lat();
+    console.log(lat);
+    console.log(lng);
+    // var url = encodeURIComponent("http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng= " + lng + "&username=joeross999");
+    var url = "http://api.apixu.com/v1/current.json?q=" + lat + ',' + lng + "&key=d2ac4ed7b70f4eeaa2b04829171711";
+    $.getJSON(url, function( weather ) {
+        callback(location, status, weather);
+        console.log("test")
+    });
 
-// }
-// getWeatherForLocation();
+}
 
 function showListings() {
     // var bounds = new google.maps.LatLngBounds();
