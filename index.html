@@ -8,14 +8,14 @@
     </head>
     <body>
         <!-- Header and navbar -->
-        <div class="header">
-            <div class="ui three item menu dark">
-                <a class="item" id="change-theme">Change Theme</a>
-                <a class="item active" id="show-food">Show Food</a>
-                <a class="item" id="show-bakeries">Show Bakeries</a>
-            </div>
+        <div class="header dark">
+                <span class="header-title">New Zealand National Parks Weather Map</span>
+                <span class='mobile-menu-button'>MENU</span>
         </div>
-        <div class="map-container">
+        <div class='menu-container container'>
+            This is the menu;
+        </div>
+        <div class="map-container container">
             <div id="map"></div>
         </div>
         <script
@@ -24,12 +24,6 @@
         crossorigin="anonymous"></script>
         <script src="/js/knockout.js"></script>
         <script src="/js/styles.js"></script>
-        <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
-        <!-- <script type="text/javascript">
-          gapi.load('maps/api/place', function() {
-            console.log(' Library loaded.');
-          });
-        </script> -->
         <script src="/js/main.js"></script>
         <!-- <script src="/js/test.js"></script> -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAQIt-2QOvWNTZ9P-1oIR-OecvhSeZ97Zs&v=3&callback=initMap"></script>

@@ -8,15 +8,26 @@ html, body{
 #map>div {
     background: #0b0b0c !important;
 }
-.map-container {
+.container {
     height: calc(100% - 44px);
     padding: 0;
+    float: left;
+}
+.map-container{
+    width: 75%;
+}
+.menu-container {
+    width: 25%;
 }
 .header {
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
     z-index: 2;
     position: relative;
     display: block;
+    height: 44px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 12px;
 }
 .header a:nth-of-type(2){
     border-left: 1px solid slategray;
@@ -26,7 +37,30 @@ html, body{
     border-radius: 0px !important;
 }
 
+.header .header-title {
+    font-size: 30px;
+    vertical-align: baseline;
+}
+
+.header .mobile-menu-button {
+    display: none;
+}
+
 .dark, .dark * {
     background: #0b0b0c !important;
     color: LIGHTSLATEGREY !important;
+}
+
+@media screen and (max-width: 1024px){
+    .container {
+        width: 100%;
+    }
+    .menu-container {
+        display: none;
+    }
+    .header .mobile-menu-button {
+        display: block;
+        float: right;
+        font-size: 30px;
+    }
 }
