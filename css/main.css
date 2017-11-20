@@ -45,6 +45,44 @@ html, body{
 .header .mobile-menu-button {
     display: none;
 }
+.input-field {
+    width: 80%;
+    border: 0;
+    padding: 20px 10px;
+}
+
+.search-button {
+    border-radius: 5px;
+    padding: 10px 30px;
+    outline: 0;
+    border: 3px solid rgba(86, 146, 235, 0.404); 
+    width: 20%;
+    margin-left: -20px;
+    margin-top: 7px;
+}
+
+.input-field, .search-button {
+    background: rgb(209, 211, 221);
+    color: #a3a3a3;
+    box-sizing: border-box;
+    float: left;
+    display: block;
+
+}
+
+.search-block {
+    margin: 30px 30px;
+    height: 60px;
+}
+
+.results-block {
+    width: 90%;
+    margin: 0 auto;
+    height: calc(100% - 150px);
+    border: 2px solid black;
+    border-radius: 5px;
+    overflow: scroll;
+}
 
 .dark, .dark * {
     background: #0b0b0c !important;
