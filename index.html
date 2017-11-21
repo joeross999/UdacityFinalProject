@@ -15,10 +15,12 @@
         <div class='menu-container container'>
             <div class="search-block">
                 <input type="text" class='input-field' placeholder="Search...">
-                <button class="search-button">Go!</button>
+                <button class="search-button" data-bind='click: print'>Go!</button>
             </div>
             <div class="results-block">
-            <ul class="results-container"></ul>
+            <ul class="results-container" data-bind="foreach: info">
+                <li data-bind="text: name"></li>
+            </ul>
             </div>
         </div>
         <div class="map-container container">

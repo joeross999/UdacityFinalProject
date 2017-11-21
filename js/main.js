@@ -1,7 +1,5 @@
-var map;
+var map, model, infowindow, placesService;
 var markers = [];
-var infowindow;
-var placesService;
 function initMap() {
     /***************
      * Setup Map
@@ -12,17 +10,13 @@ function initMap() {
         styles: darkGray,
         mapTypeControl: false,
         disableDefaultUI: true,
-        // gestureHandling: 'none',
-        // zoomControl: false,
-        // minZoom: 7,
-        // maxZoom: 7
     });
     
     /**********************************
      * Locations request
      **********************************/
     var request = {
-        query: 'Nationl parks in new zealand'
+        query: 'National parks in new zealand'
     };
     placesService = new google.maps.places.PlacesService(map);
     console.log()
@@ -34,15 +28,32 @@ function initMap() {
                 markers.push(createMarker(results[i]));
             }
         }
+        setModel(markers, results);
+        console.log(results);
+        console.log(markers);
     }
-    
     infowindow = new google.maps.InfoWindow();
-    
-    document.getElementById('show-food').addEventListener('click', showListings);
-    document.getElementById('show-bakeries').addEventListener('click', hideListings);
 }
 
+/*************************************************
+ * Knocout model
+ ************************************************/
 
+var m = function(locations, results){
+    this.locations = ko.observableArray(locations);
+    this.info = ko.observableArray(results);
+    
+    this.print = function(){
+        console.dir(this.loctions);
+    }
+};
+function setModel(locations, results) {
+    model = new m(locations, results);
+    ko.applyBindings(model);
+    console.log('results');
+    console.log(results);
+    console.log(model.results);
+}
 
 /*************************************************
  * Info window and marker functions
@@ -62,7 +73,7 @@ function createMarker(place) {
         populateInfoWindow(marker, infowindow);
         console.log("addListener")
     });
-    console.log('createMarker')
+    return marker;
 }
 
 function populateInfoWindow(marker, infowindow) {
