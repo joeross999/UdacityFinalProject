@@ -5,14 +5,14 @@ This project is rather simple just clone the repository to your computer and ope
 
 ## Notes
 
-# I have used code from various sources to accomplish this project.
+### I have used code from various sources to accomplish this project.
 
 * Code from the Udacity Nano degree hosted on GitHub [here](https://github.com/udacity/ud864)
 * Examples from Google's API tutorials located [here](https://developers.google.com/maps/documentation/javascript/tutorial)
 * Examples from the jQuery API documentation located [here](http://api.jquery.com/)
 * Examples from the knockout.js documentation located [here](http://knockoutjs.com/documentation/introduction.html)
 
-# APIs used for this app
+### APIs used for this app
 
 Map services provided by the Google Maps API
 Weather services provided by APIXU
