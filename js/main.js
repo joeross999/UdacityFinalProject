@@ -64,6 +64,18 @@ var m = function(data){
     }
 
     this.searchValue = '';
+
+    this.toggleMenu = function(){
+        if(this.showMenu() == 'hide menu-container container'){
+            this.showMenu('show menu-container container');
+        } else {
+            this.showMenu('hide menu-container container');
+        }
+        console.log(this.showMenu);
+    }
+    
+    this.showMenu = ko.observable('show menu-container container');
+
 };
 function setModel(markers, results) {
     markers.forEach(function(elem, i){

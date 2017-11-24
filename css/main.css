@@ -110,7 +110,7 @@ html, body{
     .container {
         width: 100%;
     }
-    .menu-container {
+    .hide {
         display: none;
     }
     .header .mobile-menu-button {

@@ -10,10 +10,10 @@
         <!-- Header and navbar -->
         <div class="header dark">
                 <span class="header-title">New Zealand National Parks Weather Map</span>
-                <span class='mobile-menu-button'>MENU</span>
+                <span class='mobile-menu-button' data-bind='click: toggleMenu'>MENU</span>
         </div>
         <!-- Menu block -->
-        <div class='menu-container container'>
+        <div class='menu-container container' data-bind="attr: { class: showMenu }">
             <div class="search-block">
                 <form data-bind='submit: search'>
                     <input type="text" class='input-field' placeholder="Search..." data-bind='textInput: searchValue'>
