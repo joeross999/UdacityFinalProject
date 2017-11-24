@@ -1,5 +1,6 @@
 var map, model, infowindow, placesService;
 var markers = [];
+var highlightedIcon, defaultMarker;
 function initMap() {
     /***************
      * Setup Map
@@ -30,6 +31,8 @@ function initMap() {
         setModel(markers, results);
     }
     infowindow = new google.maps.InfoWindow();
+    highlightedIcon = makeMarkerIcon('FFFF24');
+    defaultIcon = makeMarkerIcon('0091ff');
 }
 
 /*************************************************
@@ -42,6 +45,7 @@ var m = function(data){
     this.initialMarkers = data.slice();
     
     this.selectMarker = function(marker){
+        if(this.selectedMarker){this.selectedMarker.setIcon(defaultIcon);};
         this.selectedMarker = marker;
         populateInfoWindow(marker, infowindow);
     }
@@ -71,7 +75,6 @@ var m = function(data){
         } else {
             this.showMenu('hide menu-container container');
         }
-        console.log(this.showMenu);
     }
     
     this.showMenu = ko.observable('show menu-container container');
@@ -96,7 +99,8 @@ function createMarker(place) {
     var marker = new google.maps.Marker({
         map: map,
         position: place.geometry.location,
-        id: place.place_id
+        id: place.place_id,
+        icon: defaultIcon
     });
     google.maps.event.addListener(marker, 'click', function() {
         model.selectMarker(this);
@@ -106,25 +110,28 @@ function createMarker(place) {
 
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker) {
+    if (infowindow.marker != marker && marker!=null) {
         infowindow.marker = marker;
         details = getLocationDetails(marker, function(details, status, weather){
             if (status === google.maps.places.PlacesServiceStatus.OK){
-            infowindow.setContent(parkHTML(details, weather));
+                infowindow.setContent(parkHTML(details, weather));
             }else{
             }
             infowindow.open(map, marker);
             // Make sure the marker property is cleared if the infowindow is closed.
             infowindow.addListener('closeclick', function() {
-                infowindow.marker = null;
+                console.log('close')
+                model.selectMarker(null);
+                // infowindow.marker = null;
             });
         });
+        marker.setIcon(highlightedIcon);
     }
 }
 
 // This is the html behind the infowindow
 function parkHTML(details, weather) {
-    var html = '<div><h2>' + details.name + '</h2><div style="width: 50%; float: left"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 50%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p><img style="width: 100%"src="' + weather.current.condition.icon + '"></div></div>'
+    var html = '<div><h2>' + details.name + '<img style="width: 50px;"src="' + weather.current.condition.icon + '"></h2><div style="width: 45%; float: left; margin-right: 5%;"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 45%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p></div></div>'
     return html;
 }
 
@@ -161,3 +168,14 @@ function hideListings() {
         markers[i].setMap(null);
     }
 }
+
+function makeMarkerIcon(markerColor) {
+    var markerImage = new google.maps.MarkerImage(
+      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+      '|40|_|%E2%80%A2',
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(10, 34),
+      new google.maps.Size(21,34));
+    return markerImage;
+  }

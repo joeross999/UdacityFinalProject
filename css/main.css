@@ -101,6 +101,10 @@ html, body{
     font-size: 10px;
 }
 
+.gm-style-iw>div>div{
+    overflow: hidden !important;
+}
+
 .dark, .dark * {
     background: #0b0b0c !important;
     color: LIGHTSLATEGREY !important;
