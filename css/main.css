@@ -87,9 +87,11 @@ html, body{
     list-style: none;
     font-size: 20px;
     color: white;
-    line-height: 2em;
     text-decoration: underline;
     font-weight: bold;
+}
+.results-container li {
+    margin-bottom: 20px;
 }
 
 .dark, .dark * {
