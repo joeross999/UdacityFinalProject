@@ -19,7 +19,6 @@ function initMap() {
         query: 'National parks in new zealand'
     };
     placesService = new google.maps.places.PlacesService(map);
-    console.log()
     placesService.textSearch(request, callback);
     
     function callback(results, status) {
@@ -29,8 +28,6 @@ function initMap() {
             }
         }
         setModel(markers, results);
-        console.log(results);
-        console.log(markers);
     }
     infowindow = new google.maps.InfoWindow();
 }
@@ -43,14 +40,15 @@ var m = function(data){
     context = this;
     this.markers = ko.observableArray(data);
     this.initialMarkers = data.slice();
-    // this.info = ko.observableArray(results);
     
     this.selectMarker = function(marker){
         this.selectedMarker = marker;
         populateInfoWindow(marker, infowindow);
-        console.log(model);
     }
+
     this.selectedMarker = null;
+
+    // Search through markers and display the correct items to the map and menu list
     this.search = function(){
         hideListings();
         this.markers.removeAll();
@@ -60,7 +58,6 @@ var m = function(data){
             }
         });
         
-        console.log('this is it');
         this.markers().forEach(function(elem){
             elem.setMap(map);
         });
@@ -75,7 +72,6 @@ function setModel(markers, results) {
     model = new m(markers);
     ko.applyBindings(model);
 
-    console.log(model);
 }
 
 
@@ -90,14 +86,8 @@ function createMarker(place) {
         position: place.geometry.location,
         id: place.place_id
     });
-    // marker.addEventListener('click', populateInfoWindow);
     google.maps.event.addListener(marker, 'click', function() {
-        // infowindow.setContent(place.name);
-        // infowindow.open(map, this);'
         model.selectMarker(this);
-        // populateInfoWindow(marker, infowindow);
-        console.log("addListener");
-        console.log(this);
     });
     return marker;
 }
@@ -106,15 +96,10 @@ function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        console.log("populateInfoWindow")
         details = getLocationDetails(marker, function(details, status, weather){
-            console.log('getLocationDetails');
-            console.log(details);
-            console.log(weather);
             if (status === google.maps.places.PlacesServiceStatus.OK){
             infowindow.setContent(parkHTML(details, weather));
             }else{
-                console.log('there is a problem');
             }
             infowindow.open(map, marker);
             // Make sure the marker property is cleared if the infowindow is closed.
@@ -125,13 +110,13 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
+// This is the html behind the infowindow
 function parkHTML(details, weather) {
     var html = '<div><h2>' + details.name + '</h2><div style="width: 50%; float: left"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 50%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p><img style="width: 100%"src="' + weather.current.condition.icon + '"></div></div>'
-    console.log('html');
-    console.log(html);
     return html;
 }
 
+// Google maps places details api call
 function getLocationDetails(marker, callback){
     placesService.getDetails({
         placeId: marker.id
@@ -141,26 +126,23 @@ function getLocationDetails(marker, callback){
       });
 }
 
+// Gets the current weather for specified location
 function getWeatherForLocation(location, status, callback) {
-    console.log('getWeatherForLocation');
     var lng = location.geometry.location.lng();
     var lat = location.geometry.location.lat();
-    console.log(lat);
-    console.log(lng);
     var url = "http://api.apixu.com/v1/current.json?q=" + lat + ',' + lng + "&key=d2ac4ed7b70f4eeaa2b04829171711";
     $.getJSON(url, function( weather ) {
         callback(location, status, weather);
-        console.log("test")
     });
 
 }
 
+// Show or hide markers from the map
 function showListings() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
 }
-
 
 function hideListings() {
     for (var i = 0; i < markers.length; i++) {

@@ -12,6 +12,7 @@
                 <span class="header-title">New Zealand National Parks Weather Map</span>
                 <span class='mobile-menu-button'>MENU</span>
         </div>
+        <!-- Menu block -->
         <div class='menu-container container'>
             <div class="search-block">
                 <form data-bind='submit: search'>
@@ -19,6 +20,7 @@
                     <button class="search-button" data-bind='click: search'>Go!</button>
                 </form>
             </div>
+            <!-- Results will be dispalyed here -->
             <div class="results-block">
                 <ul class="results-container" data-bind="foreach: markers">
                     <li data-bind="text: data.name, click: $parent.selectMarker"></li>
@@ -29,6 +31,7 @@
                 </div>
             </div>
         </div>
+        <!-- This is the map -->
         <div class="map-container container">
             <div id="map"></div>
         </div>
