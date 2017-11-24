@@ -14,8 +14,8 @@
         </div>
         <div class='menu-container container'>
             <div class="search-block">
-                <input type="text" class='input-field' placeholder="Search...">
-                <button class="search-button" data-bind='click: print'>Go!</button>
+                <input type="text" class='input-field' placeholder="Search..." data-bind='textInput: searchValue'>
+                <button class="search-button" data-bind='click: search'>Go!</button>
             </div>
             <div class="results-block">
             <ul class="results-container" data-bind="foreach: markers">

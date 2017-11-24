@@ -39,8 +39,10 @@ function initMap() {
  * Knockout model
  ************************************************/
 
-var m = function(markers){
-    this.markers = ko.observableArray(markers);
+var m = function(data){
+    context = this;
+    this.markers = ko.observableArray(data);
+    this.initialMarkers = data.slice();
     // this.info = ko.observableArray(results);
     
     this.selectMarker = function(marker){
@@ -49,6 +51,22 @@ var m = function(markers){
         console.log(model);
     }
     this.selectedMarker = null;
+    this.search = function(){
+        hideListings();
+        this.markers.removeAll();
+        this.initialMarkers.forEach(function(marker){
+            if(marker.data.name.toLowerCase().includes(context.searchValue.toLowerCase())){
+                context.markers.push(marker);
+            }
+        });
+        
+        console.log('this is it');
+        this.markers().forEach(function(elem){
+            elem.setMap(map);
+        });
+    }
+
+    this.searchValue = '';
 };
 function setModel(markers, results) {
     markers.forEach(function(elem, i){
