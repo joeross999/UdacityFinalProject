@@ -1,6 +1,6 @@
 var map, model, infowindow, placesService;
 var markers = [];
-var highlightedIcon, defaultMarker;
+var highlightedIcon, defaultIcon;
 function initMap() {
     /***************
      * Setup Map
@@ -45,10 +45,10 @@ var m = function(data){
     this.initialMarkers = data.slice();
     
     this.selectMarker = function(marker){
-        if(this.selectedMarker){this.selectedMarker.setIcon(defaultIcon);};
+        if(this.selectedMarker){this.selectedMarker.setIcon(defaultIcon);}
         this.selectedMarker = marker;
         populateInfoWindow(marker, infowindow);
-    }
+    };
 
     this.selectedMarker = null;
 
@@ -65,7 +65,7 @@ var m = function(data){
         this.markers().forEach(function(elem){
             elem.setMap(map);
         });
-    }
+    };
 
     this.searchValue = '';
 
@@ -75,7 +75,7 @@ var m = function(data){
         } else {
             this.showMenu('hide menu-container container');
         }
-    }
+    };
     
     this.showMenu = ko.observable('show menu-container container');
 
@@ -110,7 +110,7 @@ function createMarker(place) {
 
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker && marker!=null) {
+    if (infowindow.marker != marker && marker!==null) {
         infowindow.marker = marker;
         details = getLocationDetails(marker, function(details, status, weather){
             if (status === google.maps.places.PlacesServiceStatus.OK){
@@ -120,7 +120,6 @@ function populateInfoWindow(marker, infowindow) {
             infowindow.open(map, marker);
             // Make sure the marker property is cleared if the infowindow is closed.
             infowindow.addListener('closeclick', function() {
-                console.log('close')
                 model.selectMarker(null);
                 // infowindow.marker = null;
             });
@@ -131,7 +130,7 @@ function populateInfoWindow(marker, infowindow) {
 
 // This is the html behind the infowindow
 function parkHTML(details, weather) {
-    var html = '<div><h2>' + details.name + '<img style="width: 50px;"src="' + weather.current.condition.icon + '"></h2><div style="width: 45%; float: left; margin-right: 5%;"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 45%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p></div></div>'
+    var html = '<div><h2>' + details.name + '<img style="width: 50px;"src="' + weather.current.condition.icon + '"></h2><div style="width: 45%; float: left; margin-right: 5%;"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 45%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p></div></div>';
     return html;
 }
 
