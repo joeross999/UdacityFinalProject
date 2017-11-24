@@ -36,24 +36,30 @@ function initMap() {
 }
 
 /*************************************************
- * Knocout model
+ * Knockout model
  ************************************************/
 
-var m = function(locations, results){
-    this.locations = ko.observableArray(locations);
-    this.info = ko.observableArray(results);
+var m = function(markers){
+    this.markers = ko.observableArray(markers);
+    // this.info = ko.observableArray(results);
     
-    this.print = function(){
-        console.dir(this.loctions);
+    this.selectMarker = function(marker){
+        this.selectedMarker = marker;
+        populateInfoWindow(marker, infowindow);
+        console.log(model);
     }
+    this.selectedMarker = null;
 };
-function setModel(locations, results) {
-    model = new m(locations, results);
+function setModel(markers, results) {
+    markers.forEach(function(elem, i){
+        elem.data = results[i];
+    });
+    model = new m(markers);
     ko.applyBindings(model);
-    console.log('results');
-    console.log(results);
-    console.log(model.results);
+
+    console.log(model);
 }
+
 
 /*************************************************
  * Info window and marker functions
@@ -69,9 +75,11 @@ function createMarker(place) {
     // marker.addEventListener('click', populateInfoWindow);
     google.maps.event.addListener(marker, 'click', function() {
         // infowindow.setContent(place.name);
-        // infowindow.open(map, this);
-        populateInfoWindow(marker, infowindow);
-        console.log("addListener")
+        // infowindow.open(map, this);'
+        model.selectMarker(this);
+        // populateInfoWindow(marker, infowindow);
+        console.log("addListener");
+        console.log(this);
     });
     return marker;
 }

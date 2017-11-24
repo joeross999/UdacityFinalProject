@@ -18,8 +18,8 @@
                 <button class="search-button" data-bind='click: print'>Go!</button>
             </div>
             <div class="results-block">
-            <ul class="results-container" data-bind="foreach: info">
-                <li data-bind="text: name"></li>
+            <ul class="results-container" data-bind="foreach: markers">
+                <li data-bind="text: data.name"></li>
             </ul>
             </div>
         </div>
