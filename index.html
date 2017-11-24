@@ -21,7 +21,7 @@
             </div>
             <div class="results-block">
             <ul class="results-container" data-bind="foreach: markers">
-                <li data-bind="text: data.name"></li>
+                <li data-bind="text: data.name, click: $parent.selectMarker"></li>
             </ul>
             </div>
         </div>

@@ -92,6 +92,7 @@ html, body{
 }
 .results-container li {
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .dark, .dark * {
