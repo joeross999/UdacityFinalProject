@@ -20,9 +20,13 @@
                 </form>
             </div>
             <div class="results-block">
-            <ul class="results-container" data-bind="foreach: markers">
-                <li data-bind="text: data.name, click: $parent.selectMarker"></li>
-            </ul>
+                <ul class="results-container" data-bind="foreach: markers">
+                    <li data-bind="text: data.name, click: $parent.selectMarker"></li>
+                </ul>
+                <div class='attributions'>
+                    <p>Map services provided by the Google Maps API</p>
+                    <p>Weather services provided by APIXU</p>
+                </div>
             </div>
         </div>
         <div class="map-container container">

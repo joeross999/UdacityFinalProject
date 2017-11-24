@@ -147,7 +147,6 @@ function getWeatherForLocation(location, status, callback) {
     var lat = location.geometry.location.lat();
     console.log(lat);
     console.log(lng);
-    // var url = encodeURIComponent("http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng= " + lng + "&username=joeross999");
     var url = "http://api.apixu.com/v1/current.json?q=" + lat + ',' + lng + "&key=d2ac4ed7b70f4eeaa2b04829171711";
     $.getJSON(url, function( weather ) {
         callback(location, status, weather);
@@ -157,12 +156,9 @@ function getWeatherForLocation(location, status, callback) {
 }
 
 function showListings() {
-    // var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
-        // bounds.extend(markers[i].position);
     }
-    // map.fitBounds(bounds);
 }
 
 

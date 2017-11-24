@@ -95,6 +95,12 @@ html, body{
     cursor: pointer;
 }
 
+.attributions {
+    margin: 40px; 
+    color: white;
+    font-size: 10px;
+}
+
 .dark, .dark * {
     background: #0b0b0c !important;
     color: LIGHTSLATEGREY !important;
