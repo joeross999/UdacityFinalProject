@@ -16,9 +16,9 @@
         <!-- Menu block -->
         <div class='menu-container container' data-bind="attr: { class: showMenu }">
             <div class="search-block">
-                <form data-bind='submit: search'>
-                    <input type="text" class='input-field' placeholder="Search..." data-bind='textInput: searchValue'>
-                    <button class="search-button" data-bind='click: search'>Go!</button>
+                <form>
+                    <input type="text" class='input-field' placeholder="Search..." data-bind='textInput: searchValue, event: { keyup: search }'>
+                    <button class="search-button" data-bind='click: clear'>Clear</button>
                 </form>
             </div>
             <!-- Results will be dispalyed here -->

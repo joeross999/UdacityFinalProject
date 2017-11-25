@@ -57,7 +57,7 @@ var m = function(data){
         hideListings();
         this.markers.removeAll();
         this.initialMarkers.forEach(function(marker){
-            if(marker.data.name.toLowerCase().includes(context.searchValue.toLowerCase())){
+            if(marker.data.name.toLowerCase().includes(context.searchValue().toLowerCase())){
                 context.markers.push(marker);
             }
         });
@@ -65,9 +65,15 @@ var m = function(data){
         this.markers().forEach(function(elem){
             elem.setMap(map);
         });
+        return true;
     };
 
-    this.searchValue = '';
+    this.clear = function(){
+        this.searchValue('');
+        this.search();
+    }
+
+    this.searchValue = ko.observable('');
 
     this.toggleMenu = function(){
         if(this.showMenu() == 'hide menu-container container'){
