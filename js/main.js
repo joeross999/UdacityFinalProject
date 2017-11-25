@@ -1,6 +1,5 @@
 var map, model, infowindow, placesService;
 var markers = [];
-var highlightedIcon, defaultIcon;
 function initMap() {
     /***************
      * Setup Map
@@ -31,8 +30,6 @@ function initMap() {
         setModel(markers, results);
     }
     infowindow = new google.maps.InfoWindow();
-    highlightedIcon = makeMarkerIcon('FFFF24');
-    defaultIcon = makeMarkerIcon('0091ff');
 }
 
 /*************************************************
@@ -45,7 +42,10 @@ var m = function(data){
     this.initialMarkers = data.slice();
     
     this.selectMarker = function(marker){
-        if(this.selectedMarker){this.selectedMarker.setIcon(defaultIcon);}
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
+            marker.setAnimation(null)
+        }, 700);
         this.selectedMarker = marker;
         populateInfoWindow(marker, infowindow);
     };
@@ -100,7 +100,6 @@ function createMarker(place) {
         map: map,
         position: place.geometry.location,
         id: place.place_id,
-        icon: defaultIcon
     });
     google.maps.event.addListener(marker, 'click', function() {
         model.selectMarker(this);
@@ -123,7 +122,6 @@ function populateInfoWindow(marker, infowindow) {
                 model.selectMarker(null);
             });
         });
-        marker.setIcon(highlightedIcon);
     }
 }
 
@@ -170,17 +168,6 @@ function hideListings() {
         markers[i].setMap(null);
     }
 }
-
-function makeMarkerIcon(markerColor) {
-    var markerImage = new google.maps.MarkerImage(
-      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
-      '|40|_|%E2%80%A2',
-      new google.maps.Size(21, 34),
-      new google.maps.Point(0, 0),
-      new google.maps.Point(10, 34),
-      new google.maps.Size(21,34));
-    return markerImage;
-  }
 
   /*************************************************
  * Error Handling
