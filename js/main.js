@@ -77,7 +77,7 @@ var m = function(data){
         }
     };
     
-    this.showMenu = ko.observable('show menu-container container');
+    this.showMenu = ko.observable('hide menu-container container');
 
 };
 function setModel(markers, results) {
@@ -130,7 +130,8 @@ function populateInfoWindow(marker, infowindow) {
 
 // This is the html behind the infowindow
 function parkHTML(details, weather) {
-    var html = '<div><h2>' + details.name + '<img style="width: 50px;"src="' + weather.current.condition.icon + '"></h2><div style="width: 45%; float: left; margin-right: 5%;"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 45%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p></div></div>';
+    console.log(weather.current.condition.icon);
+    var html = '<div><h2 class="park-name">' + details.name + '<img style="width: 50px;"src="http:' + weather.current.condition.icon + '"></h2><div style="width: 45%; float: left; margin-right: 5%;"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 45%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p></div></div>';
     return html;
 }
 
