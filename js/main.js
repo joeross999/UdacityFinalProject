@@ -26,6 +26,8 @@ function initMap() {
             for (var i = 0; i < results.length; i++) {
                 markers.push(createMarker(results[i]));
             }
+        } else {
+            error();
         }
         setModel(markers, results);
     }
@@ -153,6 +155,10 @@ function getLocationDetails(marker, callback){
 
 // Gets the current weather for specified location
 function getWeatherForLocation(location, status, callback) {
+    if(!location){
+        error();
+        return;
+    }
     var lng = location.geometry.location.lng();
     var lat = location.geometry.location.lat();
     var url = "http://api.apixu.com/v1/current.json?q=" + lat + ',' + lng + "&key=d2ac4ed7b70f4eeaa2b04829171711";
