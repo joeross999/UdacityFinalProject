@@ -44,7 +44,7 @@ var m = function(data){
     this.selectMarker = function(marker){
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function(){
-            marker.setAnimation(null)
+            marker.setAnimation(null);
         }, 700);
         this.selectedMarker = marker;
         populateInfoWindow(marker, infowindow);
@@ -71,7 +71,7 @@ var m = function(data){
     this.clear = function(){
         this.searchValue('');
         this.search();
-    }
+    };
 
     this.searchValue = ko.observable('');
 
@@ -179,5 +179,5 @@ function hideListings() {
  * Error Handling
  ************************************************/
 function error(){
-    alert("We seem to have encountered a problem with one of our resources.  Please try again later.")
+    alert("We seem to have encountered a problem with one of our resources.  Please try again later.");
 }
