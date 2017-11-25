@@ -121,7 +121,6 @@ function populateInfoWindow(marker, infowindow) {
             // Make sure the marker property is cleared if the infowindow is closed.
             infowindow.addListener('closeclick', function() {
                 model.selectMarker(null);
-                // infowindow.marker = null;
             });
         });
         marker.setIcon(highlightedIcon);
@@ -130,7 +129,6 @@ function populateInfoWindow(marker, infowindow) {
 
 // This is the html behind the infowindow
 function parkHTML(details, weather) {
-    console.log(weather.current.condition.icon);
     var html = '<div><h2 class="park-name">' + details.name + '<img style="width: 50px;"src="http:' + weather.current.condition.icon + '"></h2><div style="width: 45%; float: left; margin-right: 5%;"><p>' + details.formatted_address + '<br>Rating: ' + details.rating + '<br><a href="' + details.url + '">View Park</a></p></div><div style="width: 45%; float: left;"><h3>Weather</h3><p>' + weather.current.condition.text + '</p></div></div>';
     return html;
 }
@@ -139,10 +137,12 @@ function parkHTML(details, weather) {
 function getLocationDetails(marker, callback){
     placesService.getDetails({
         placeId: marker.id
-      }, function(place, status) {
+    }, function(place, status) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+            error();
+        }
         getWeatherForLocation(place, status, callback);        
-            // callback(place, status);
-      });
+    });
 }
 
 // Gets the current weather for specified location
@@ -152,6 +152,8 @@ function getWeatherForLocation(location, status, callback) {
     var url = "http://api.apixu.com/v1/current.json?q=" + lat + ',' + lng + "&key=d2ac4ed7b70f4eeaa2b04829171711";
     $.getJSON(url, function( weather ) {
         callback(location, status, weather);
+    }).fail(function(){
+        error();
     });
 
 }
@@ -179,3 +181,10 @@ function makeMarkerIcon(markerColor) {
       new google.maps.Size(21,34));
     return markerImage;
   }
+
+  /*************************************************
+ * Error Handling
+ ************************************************/
+function error(){
+    alert("We seem to have encountered a problem with one of our resources.  Please try again later.")
+}
