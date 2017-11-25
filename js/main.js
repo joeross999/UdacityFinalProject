@@ -42,10 +42,12 @@ var m = function(data){
     this.initialMarkers = data.slice();
     
     this.selectMarker = function(marker){
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){
-            marker.setAnimation(null);
-        }, 700);
+        if(marker){
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function(){
+                marker.setAnimation(null);
+            }, 700);
+        }
         this.selectedMarker = marker;
         populateInfoWindow(marker, infowindow);
     };
